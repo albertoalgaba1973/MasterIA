@@ -1,0 +1,17 @@
+# Entornos virtuales
+.venv/
+env/
+# Environment
+.env
+
+# Archivos compilados de Python
+__pycache__/
+*.py[cod]
+
+# Distribución y compilación
+build/
+dist/
+*.egg-info/
+
+# IDE
+.vscode/

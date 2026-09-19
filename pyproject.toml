@@ -1,0 +1,29 @@
+[project]
+name = "estimador-cag"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Alberto Algaba", email = "alberto.algaba@gmail.com" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "anthropic>=1.7.0",
+    "fastapi>=0.141.1",
+    "openai>=3.16.2",
+    "pydantic-settings>=2.15.0",
+    "python-dotenv>=1.2.3",
+    "structlog>=26.1.0",
+    "uvicorn[standard]>=0.53.0",
+]
+
+[project.scripts]
+estimador-cag = "estimador_cag:main"
+
+[build-system]
+requires = ["uv_build>=0.12.17,<0.13.0"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-root = ""
+module-name = "app"
