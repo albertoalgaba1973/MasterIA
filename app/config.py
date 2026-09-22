@@ -1,4 +1,5 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
+from functools import lru_cache
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env")
@@ -11,6 +12,9 @@ class Settings(BaseSettings):
     app_env: str
     log_level: str
     items_per_user: int = 50
+    timeout: int
+    max_retries: int
+
 
 settings = Settings()
 

@@ -51,4 +51,26 @@ curl -X POST http://localhost:8000/api/v1/estimate \
     "total_tokens": 1057
   }
 }
+**Tips**
+**Creacion proyecto**
+-- Iniciar el proyecto
+uv init estimador-cag
+cd estimador-cag
+--Añadir las dependencias
+uv add fastapi
+uv add uvicorn[standard]
+uv add pydantic-settings
+uv add openai 
+uv add anthropic
+uv add python-dotenv
+
+Cómo se ejecuta el servidor unicorn para probar las fast api.
+uv run uvicorn app.main:app --reload
+
+
+Para arrancar streamlit hay que hacerlo desde el terminal, por línea de comando no encuentra streamlit (quizás por el path?)
+Confirmado, puesto path en variables de entorno, así como phyton funciona desde command line
+
+streamlit run streamlit_app.py
+
 ```

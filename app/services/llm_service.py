@@ -68,7 +68,7 @@ def _call_openai(messages: list[dict]) -> dict:
     from openai import OpenAI
 
     settings = get_settings()
-    client = OpenAI(api_key=settings.openai_api_key)
+    client = OpenAI(api_key=settings.openai_api_key,timeout=settings.timeout,max_retries=settings.max_retries)
 
     response = client.chat.completions.create(
         model=settings.llm_model,
@@ -83,6 +83,16 @@ def _call_openai(messages: list[dict]) -> dict:
         input_tokens=usage.prompt_tokens,
         output_tokens=usage.completion_tokens,
     )
+
+    response_choice = response.choices[0]
+
+    if response_choice.finish_reason == "length":
+        raise LLMServiceError(
+            f"Respuesta truncada en {MAX_TOKENS} tokens."
+        )
+
+    if not response_choice.message.content:
+        raise LLMServiceError("El modelo devolvió una respuesta vacía.")
 
     return {
         "estimation": response.choices[0].message.content,
@@ -101,7 +111,7 @@ def _call_anthropic(system: str, user_message: str) -> dict:
     from anthropic import Anthropic
 
     settings = get_settings()
-    client = Anthropic(api_key=settings.anthropic_api_key)
+    client = Anthropic(api_key=settings.anthropic_api_key,timeout=settings.timeout,max_retries=settings.max_retries)
 
     response = client.messages.create(
         model=settings.llm_model,

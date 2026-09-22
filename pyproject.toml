@@ -13,12 +13,18 @@ dependencies = [
     "openai>=3.16.2",
     "pydantic-settings>=2.15.0",
     "python-dotenv>=1.2.3",
+    "streamlit>=1.40.0",
     "structlog>=26.1.0",
     "uvicorn[standard]>=0.53.0",
 ]
 
 [project.scripts]
 estimador-cag = "estimador_cag:main"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0.0",
+]
 
 [build-system]
 requires = ["uv_build>=0.12.17,<0.13.0"]
