@@ -21,6 +21,17 @@ App at http://localhost:3000. Healthcheck at `/up`.
 
 The first build compiles native gems (`bootsnap`, `nokogiri`, `pg`, `debug`) and may take several minutes; subsequent builds are cached unless `Gemfile.lock` changes.
 
+### Corporate HTTPS inspection
+
+If Bundler reports `CertificateFailureError` behind a corporate proxy such as
+Netskope, export the corporate root CA from your trusted OS certificate store
+or obtain it from IT. Place its public certificate in `certs/` as a PEM-encoded
+`.crt` file (one certificate per file), then rebuild with
+`docker compose build estimator-web`. The image adds these certificates to its
+CA trust store without disabling TLS verification. Local certificates are
+ignored by Git; never place private keys in this directory. Leave it empty
+when no additional CA is needed.
+
 ## Quick start (local, no Docker)
 
 Requires Postgres listening on the local Unix socket.

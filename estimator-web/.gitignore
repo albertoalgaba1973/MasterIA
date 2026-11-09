@@ -7,6 +7,9 @@
 # Ignore bundler config.
 /.bundle
 
+/certs/*
+!/certs/.keep
+
 # Ignore all environment files.
 /.env*
 

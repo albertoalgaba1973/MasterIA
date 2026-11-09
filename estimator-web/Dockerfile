@@ -19,6 +19,7 @@ WORKDIR /rails
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y \
         build-essential \
+        ca-certificates \
         curl \
         git \
         libjemalloc2 \
@@ -27,7 +28,11 @@ RUN apt-get update -qq && \
         libyaml-dev \
         pkg-config \
         postgresql-client && \
+    update-ca-certificates && \
     rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
+
+COPY certs/ /usr/local/share/ca-certificates/
+RUN update-ca-certificates
 
 ENV BUNDLE_PATH=/usr/local/bundle \
     BUNDLE_JOBS=4 \

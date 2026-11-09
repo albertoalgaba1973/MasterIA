@@ -38,6 +38,10 @@ WORKDIR /app
 # Bring in the pre-built virtual environment from the builder stage.
 COPY --from=builder /app/.venv /app/.venv
 
+# Trust optional local corporate root CAs used by HTTPS-inspecting proxies.
+COPY certs/ /usr/local/share/ca-certificates/
+RUN update-ca-certificates
+
 # Copy application source code.
 COPY app/ /app/app/
 
@@ -51,6 +55,8 @@ ENV PATH="/app/.venv/bin:$PATH"
 ENV PYTHONUNBUFFERED=1
 # Don't generate .pyc files at runtime; they add no value inside a container.
 ENV PYTHONDONTWRITEBYTECODE=1
+ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt \
+    REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
 
 # Switch to the non-root user for all subsequent commands and at runtime.
 USER appuser
